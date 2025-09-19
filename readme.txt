@@ -1,14 +1,31 @@
-Developed an AI agent using LangChain that integrates with external tools and generates responses powered by OpenAI GPT models
+AI Research Agent (LangChain + Anthropic)
+
+This project is a simple research assistant built with LangChain tool-calling, backed by Anthropic Claude. It can search the web (DuckDuckGo), read Wikipedia, and optionally save results to `research_output.txt` via a save tool.
 
 Setup
-1. Create a .env file in the project root with:
-   OPENAI_API_KEY=your_api_key_here
-   # Optional, defaults to gpt-4o-mini
-   OPENAI_MODEL=gpt-4o-mini
+1. Create a `.env` file in the project root with:
+   ANTHROPIC_API_KEY=your_api_key_here
+   # Optional (defaults to the value used in code)
+   ANTHROPIC_MODEL=claude-opus-4-1-20250805
 
-2. Run the startup script (creates venv, installs deps, runs the app):
-   bash startup.sh
+2. Create and activate a virtual environment, then install dependencies:
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
+
+3. Run the app:
+   python3 main.py
+   # Alternatively: bash startup.sh (expects deps already installed)
+
+Usage
+- When prompted with "Enter a query:", type your research question.
+- The agent may call tools:
+  - search: DuckDuckGo web search
+  - wikipedia: Wikipedia lookup
+  - save_text_to_file: appends structured text to `research_output.txt`
+- The program prints the parsed topic. Additional fields may be printed/saved depending on tool usage and prompt behavior.
 
 Notes
-- The agent uses OpenAI via LangChain. Ensure the API key is valid.
-- If you see an authentication error, double-check that `.env` exists and contains OPENAI_API_KEY.
+- If you see "Missing ANTHROPIC_API_KEY", ensure `.env` exists and contains ANTHROPIC_API_KEY.
+- Ensure your network permits requests to DuckDuckGo and Wikipedia.
+- Dependencies are listed in `requirements.txt`. If you change models, adjust `ANTHROPIC_MODEL` in `.env` accordingly.

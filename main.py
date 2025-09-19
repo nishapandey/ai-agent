@@ -62,7 +62,8 @@ agent = create_tool_calling_agent(
 
 #executes the agent
 agent_executor = AgentExecutor(agent=agent, tools=[search_tool, wiki_tool, save_tool], verbose=True)
-raw_response = agent_executor.invoke({"query": "What is the capital of France?"})
+query = input("Enter a query: ")
+raw_response = agent_executor.invoke({"query": query})
 try:
     strucutred_response = parser.parse(raw_response.get("output", "")[0]["text"])
     print(strucutred_response.topic)
